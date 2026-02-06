@@ -13,7 +13,6 @@ from datetime import datetime, timedelta
 # Page configuration
 st.set_page_config(
     page_title="Restaurant Analytics",
-    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -377,7 +376,6 @@ with tab1:
         )
     
     with col3:
-        color = "🟢" if food_cost_pct <= target_food_cost else "🔴"
         st.markdown(
             metric_card("Food Cost %", f"{food_cost_pct:.1f}%", "percent", f"Target: {target_food_cost:.1f}%"),
             unsafe_allow_html=True
