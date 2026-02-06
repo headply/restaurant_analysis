@@ -61,7 +61,7 @@ Analysis of 18 months of POS data (547,918 transactions, $6.2M revenue) revealed
 
 ## Live Dashboard
 
-Access the interactive dashboard here: **[Deploy to Streamlit Community Cloud]**
+Access the interactive dashboard here: **https://restaurantsales.streamlit.app/**
 
 ### Dashboard Features
 

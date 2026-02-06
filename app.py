@@ -1,6 +1,7 @@
 """
 Restaurant Menu Profitability & Waste Analysis Dashboard
 Production-quality Streamlit application for restaurant analytics.
+Modern warm-themed UI with interactive Plotly charts.
 """
 
 import streamlit as st
@@ -13,131 +14,17 @@ from datetime import datetime, timedelta
 # Page configuration
 st.set_page_config(
     page_title="Restaurant Analytics",
+    page_icon="🍽️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for professional dark theme
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    
-    * {
-        font-family: 'Inter', sans-serif;
-    }
-    
-    .main {
-        background-color: #0b0e14;
-    }
-    
-    .metric-card {
-        background: #111520;
-        border: 1px solid #1c2030;
-        border-radius: 8px;
-        padding: 20px;
-        transition: border-color 0.3s ease;
-    }
-    
-    .metric-card:hover {
-        border-color: #6366f1;
-    }
-    
-    .metric-label {
-        color: #5a6278;
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    
-    .metric-value {
-        color: #c9cdd6;
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-    
-    .metric-delta {
-        color: #5a6278;
-        font-size: 13px;
-        font-weight: 500;
-    }
-    
-    .status-badge {
-        display: inline-block;
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .status-healthy {
-        background: rgba(34, 197, 94, 0.1);
-        color: #22c55e;
-        border: 1px solid rgba(34, 197, 94, 0.2);
-    }
-    
-    .status-warning {
-        background: rgba(234, 179, 8, 0.1);
-        color: #eab308;
-        border: 1px solid rgba(234, 179, 8, 0.2);
-    }
-    
-    .status-danger {
-        background: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
-        border: 1px solid rgba(239, 68, 68, 0.2);
-    }
-    
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        background-color: #111520;
-        border: 1px solid #1c2030;
-        border-radius: 6px;
-        color: #5a6278;
-        padding: 12px 20px;
-        font-weight: 500;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background-color: #6366f1;
-        border-color: #6366f1;
-        color: #ffffff;
-    }
-    
-    h1, h2, h3 {
-        color: #c9cdd6;
-        font-weight: 600;
-    }
-    
-    .sidebar-section {
-        margin-bottom: 24px;
-        padding-bottom: 24px;
-        border-bottom: 1px solid #1c2030;
-    }
-    
-    .sidebar-label {
-        color: #5a6278;
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Load external CSS for clean separation of concerns
+import os
+_css_path = os.path.join(os.path.dirname(__file__), "styles.css")
+if os.path.exists(_css_path):
+    with open(_css_path) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Lucide SVG icons
 ICONS = {
@@ -163,30 +50,30 @@ def load_data():
 
 
 def create_plotly_theme():
-    """Create consistent Plotly theme for all charts."""
+    """Create consistent Plotly theme with warm restaurant palette."""
     return {
         'layout': {
             'paper_bgcolor': 'rgba(0,0,0,0)',
             'plot_bgcolor': 'rgba(0,0,0,0)',
-            'font': {'family': 'Inter', 'color': '#5a6278', 'size': 12},
-            'title': {'font': {'color': '#c9cdd6', 'size': 16, 'family': 'Inter'}},
+            'font': {'family': 'DM Sans', 'color': '#a89585', 'size': 12},
+            'title': {'font': {'color': '#f0e6dd', 'size': 16, 'family': 'DM Sans'}},
             'xaxis': {
-                'gridcolor': '#1c2030',
+                'gridcolor': '#3d302a',
                 'showgrid': True,
                 'zeroline': False,
-                'color': '#5a6278',
+                'color': '#a89585',
             },
             'yaxis': {
-                'gridcolor': '#1c2030',
+                'gridcolor': '#3d302a',
                 'showgrid': True,
                 'zeroline': False,
-                'color': '#5a6278',
+                'color': '#a89585',
             },
-            'hovermode': 'closest',
+            'hovermode': 'x unified',
             'hoverlabel': {
-                'bgcolor': '#111520',
-                'bordercolor': '#1c2030',
-                'font': {'family': 'Inter', 'color': '#c9cdd6'}
+                'bgcolor': '#2a211c',
+                'bordercolor': '#3d302a',
+                'font': {'family': 'DM Sans', 'color': '#f0e6dd'}
             },
         }
     }
@@ -324,8 +211,15 @@ with st.sidebar:
 # Filter data
 filtered_df = filter_data(df, date_range, categories, channels)
 
-# Main content
-st.title("Restaurant Analytics Dashboard")
+# Main content — Dashboard header
+st.markdown("""
+<div class="dashboard-header">
+    <div>
+        <div class="header-title">🍽️ Restaurant Analytics</div>
+        <div class="header-subtitle">Menu profitability, waste tracking &amp; data-driven optimization</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # Create tabs
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
@@ -346,6 +240,14 @@ with tab1:
     waste_cost = filtered_df[filtered_df['is_waste'] == True]['total_food_cost'].sum()
     avg_ticket = filtered_df.groupby('order_id')['total_revenue'].sum().mean()
     
+    # Additional KPIs
+    total_orders = filtered_df['order_id'].nunique()
+    if len(filtered_df) > 0:
+        num_days = (filtered_df['order_date'].max() - filtered_df['order_date'].min()).days + 1
+    else:
+        num_days = 1
+    daily_revenue_avg = total_revenue / num_days if num_days > 0 else 0
+
     # Status badge
     if food_cost_pct <= target_food_cost:
         status_class = "status-healthy"
@@ -357,11 +259,11 @@ with tab1:
         status_class = "status-danger"
         status_text = "Critical"
     
-    st.markdown(f'<span class="status-badge {status_class}">{status_text}</span>', unsafe_allow_html=True)
+    st.markdown(f'<span class="status-badge {status_class}">Food Cost: {status_text}</span>', unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # KPI Cards
-    col1, col2, col3, col4, col5 = st.columns(5)
+    # KPI Cards — two rows for better spacing
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown(
@@ -381,15 +283,24 @@ with tab1:
             unsafe_allow_html=True
         )
     
+    # Second row of KPIs
+    col4, col5, col6 = st.columns(3)
+    
     with col4:
         st.markdown(
-            metric_card("Waste Cost", f"${waste_cost:,.0f}", "trash", f"{(waste_cost/total_food_cost*100):.1f}% of food cost"),
+            metric_card("Total Orders", f"{total_orders:,}", "receipt", f"{num_days} days"),
             unsafe_allow_html=True
         )
     
     with col5:
         st.markdown(
-            metric_card("Avg Ticket Size", f"${avg_ticket:.2f}", "receipt"),
+            metric_card("Waste Cost", f"${waste_cost:,.0f}", "trash", f"{(waste_cost/total_food_cost*100):.1f}% of food cost"),
+            unsafe_allow_html=True
+        )
+    
+    with col6:
+        st.markdown(
+            metric_card("Avg Daily Revenue", f"${daily_revenue_avg:,.0f}", "dollar", f"Avg Ticket: ${avg_ticket:.2f}"),
             unsafe_allow_html=True
         )
     
@@ -409,14 +320,14 @@ with tab1:
         x=daily_revenue['order_date'],
         y=daily_revenue['total_revenue'],
         name='Daily Revenue',
-        line=dict(color='#818cf8', width=1),
+        line=dict(color='#e0b48c', width=1),
         opacity=0.3
     ))
     fig_daily.add_trace(go.Scatter(
         x=daily_revenue['order_date'],
         y=daily_revenue['revenue_7d'],
         name='7-Day Average',
-        line=dict(color='#6366f1', width=2)
+        line=dict(color='#c8956c', width=2)
     ))
     
     fig_daily.update_layout(create_plotly_theme()['layout'])
@@ -440,7 +351,7 @@ with tab1:
             x=channel_revenue.values,
             y=channel_revenue.index,
             orientation='h',
-            marker_color='#6366f1'
+            marker_color='#c8956c'
         ))
         
         fig_channel.update_layout(create_plotly_theme()['layout'])
@@ -461,7 +372,7 @@ with tab1:
             labels=category_revenue.index,
             values=category_revenue.values,
             hole=0.4,
-            marker=dict(colors=['#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe', '#e0e7ff', '#eef2ff'])
+            marker=dict(colors=['#c8956c', '#e0b48c', '#a0785a', '#d4a87c', '#8c6548', '#f0d4b8'])
         ))
         
         fig_category.update_layout(create_plotly_theme()['layout'])
@@ -472,6 +383,53 @@ with tab1:
         )
         
         st.plotly_chart(fig_category, use_container_width=True)
+    
+    # Peak hours and recent orders preview
+    col_peak, col_orders = st.columns(2)
+    
+    with col_peak:
+        # Peak hours area chart
+        hourly_orders = filtered_df.groupby('hour')['order_id'].nunique().reset_index()
+        hourly_orders.columns = ['hour', 'orders']
+        
+        fig_peak = go.Figure(go.Scatter(
+            x=hourly_orders['hour'],
+            y=hourly_orders['orders'],
+            fill='tozeroy',
+            line=dict(color='#c8956c', width=2),
+            fillcolor='rgba(200, 149, 108, 0.15)',
+            hovertemplate='Hour %{x}:00<br>Orders: %{y}<extra></extra>'
+        ))
+        fig_peak.update_layout(create_plotly_theme()['layout'])
+        fig_peak.update_layout(
+            title='Peak Hours',
+            xaxis_title='Hour of Day',
+            yaxis_title='Orders',
+            height=340
+        )
+        st.plotly_chart(fig_peak, use_container_width=True)
+    
+    with col_orders:
+        # Recent orders preview
+        st.markdown('<div class="section-title">📋 Recent Orders</div>', unsafe_allow_html=True)
+        recent = (
+            filtered_df.sort_values('order_datetime', ascending=False)
+            .drop_duplicates(subset='order_id')
+            .head(8)
+        )
+        rows_html = ""
+        for _, row in recent.iterrows():
+            rows_html += f"""
+            <div class="order-row">
+                <span class="order-id">{row['order_id']}</span>
+                <span class="order-item">{row['item_name']}</span>
+                <span class="order-channel-badge">{row['order_channel']}</span>
+                <span class="order-amount">${row['total_revenue']:.2f}</span>
+            </div>"""
+        st.markdown(
+            f'<div class="section-panel" style="padding: 12px 0;">{rows_html}</div>',
+            unsafe_allow_html=True
+        )
 
 # Tab 2: Menu Engineering
 with tab2:
@@ -484,12 +442,12 @@ with tab2:
     category_map = filtered_df.groupby('item_name')['category'].first().to_dict()
     item_stats['category'] = item_stats['item_name'].map(category_map)
     
-    # Color mapping
+    # Color mapping — warm palette for menu engineering quadrants
     color_map = {
-        'Star': '#22c55e',
-        'Plowhorse': '#eab308',
-        'Puzzle': '#818cf8',
-        'Dog': '#ef4444'
+        'Star': '#6bcb77',
+        'Plowhorse': '#f0c040',
+        'Puzzle': '#c8956c',
+        'Dog': '#e05252'
     }
     
     # Scatter plot
@@ -505,25 +463,25 @@ with tab2:
             marker=dict(
                 size=subset['revenue'] / subset['revenue'].max() * 50 + 10,
                 color=color_map[classification],
-                line=dict(color='#1c2030', width=1)
+                line=dict(color='#3d302a', width=1)
             ),
             text=subset['item_name'],
             hovertemplate='<b>%{text}</b><br>Revenue: $%{x:,.0f}<br>Margin/Unit: $%{y:.2f}<extra></extra>'
         ))
     
     # Add median lines
-    fig_matrix.add_hline(y=median_margin, line_dash="dash", line_color="#5a6278", opacity=0.5)
-    fig_matrix.add_vline(x=median_revenue, line_dash="dash", line_color="#5a6278", opacity=0.5)
+    fig_matrix.add_hline(y=median_margin, line_dash="dash", line_color="#7a6b5e", opacity=0.5)
+    fig_matrix.add_vline(x=median_revenue, line_dash="dash", line_color="#7a6b5e", opacity=0.5)
     
     # Add quadrant labels
     fig_matrix.add_annotation(x=median_revenue * 1.5, y=item_stats['margin_per_unit'].max() * 0.95,
-                             text="STARS", showarrow=False, font=dict(size=14, color="#22c55e"))
+                             text="STARS", showarrow=False, font=dict(size=14, color="#6bcb77"))
     fig_matrix.add_annotation(x=median_revenue * 1.5, y=item_stats['margin_per_unit'].min() * 1.5,
-                             text="PLOWHORSES", showarrow=False, font=dict(size=14, color="#eab308"))
+                             text="PLOWHORSES", showarrow=False, font=dict(size=14, color="#f0c040"))
     fig_matrix.add_annotation(x=median_revenue * 0.5, y=item_stats['margin_per_unit'].max() * 0.95,
-                             text="PUZZLES", showarrow=False, font=dict(size=14, color="#818cf8"))
+                             text="PUZZLES", showarrow=False, font=dict(size=14, color="#c8956c"))
     fig_matrix.add_annotation(x=median_revenue * 0.5, y=item_stats['margin_per_unit'].min() * 1.5,
-                             text="DOGS", showarrow=False, font=dict(size=14, color="#ef4444"))
+                             text="DOGS", showarrow=False, font=dict(size=14, color="#e05252"))
     
     fig_matrix.update_layout(create_plotly_theme()['layout'])
     fig_matrix.update_layout(
@@ -536,31 +494,30 @@ with tab2:
     
     st.plotly_chart(fig_matrix, use_container_width=True)
     
-    # Item breakdown table
-    st.subheader("Item Performance Details")
-    
-    # Prepare table data
-    table_data = item_stats.copy()
-    table_data['food_cost_pct'] = filtered_df.groupby('item_name')['food_cost_pct'].mean().values
-    table_data = table_data.sort_values('revenue', ascending=False)
-    
-    # Format for display
-    display_df = table_data[[
-        'item_name', 'category', 'classification', 'revenue', 
-        'margin', 'margin_per_unit', 'quantity_sold', 'food_cost_pct'
-    ]].copy()
-    
-    display_df.columns = [
-        'Item', 'Category', 'Classification', 'Revenue', 
-        'Total Margin', 'Margin/Unit', 'Qty Sold', 'Food Cost %'
-    ]
-    
-    display_df['Revenue'] = display_df['Revenue'].apply(lambda x: f'${x:,.0f}')
-    display_df['Total Margin'] = display_df['Total Margin'].apply(lambda x: f'${x:,.0f}')
-    display_df['Margin/Unit'] = display_df['Margin/Unit'].apply(lambda x: f'${x:.2f}')
-    display_df['Food Cost %'] = display_df['Food Cost %'].apply(lambda x: f'{x:.1f}%')
-    
-    st.dataframe(display_df, use_container_width=True, height=400)
+    # Item breakdown table — expandable section
+    with st.expander("📊 Item Performance Details", expanded=False):
+        # Prepare table data
+        table_data = item_stats.copy()
+        table_data['food_cost_pct'] = filtered_df.groupby('item_name')['food_cost_pct'].mean().values
+        table_data = table_data.sort_values('revenue', ascending=False)
+        
+        # Format for display
+        display_df = table_data[[
+            'item_name', 'category', 'classification', 'revenue', 
+            'margin', 'margin_per_unit', 'quantity_sold', 'food_cost_pct'
+        ]].copy()
+        
+        display_df.columns = [
+            'Item', 'Category', 'Classification', 'Revenue', 
+            'Total Margin', 'Margin/Unit', 'Qty Sold', 'Food Cost %'
+        ]
+        
+        display_df['Revenue'] = display_df['Revenue'].apply(lambda x: f'${x:,.0f}')
+        display_df['Total Margin'] = display_df['Total Margin'].apply(lambda x: f'${x:,.0f}')
+        display_df['Margin/Unit'] = display_df['Margin/Unit'].apply(lambda x: f'${x:.2f}')
+        display_df['Food Cost %'] = display_df['Food Cost %'].apply(lambda x: f'{x:.1f}%')
+        
+        st.dataframe(display_df, use_container_width=True, height=400)
     
     # Category comparison
     col1, col2 = st.columns(2)
@@ -579,7 +536,7 @@ with tab2:
             x=category_stats['margin_pct'],
             y=category_stats['category'],
             orientation='h',
-            marker_color='#6366f1'
+            marker_color='#c8956c'
         ))
         
         fig_cat_margin.update_layout(create_plotly_theme()['layout'])
@@ -599,7 +556,7 @@ with tab2:
             'total_revenue': 'sum'
         }).sort_values('food_cost_pct', ascending=False).head(15)
         
-        colors = ['#ef4444' if x > target_food_cost else '#22c55e' for x in item_food_cost['food_cost_pct']]
+        colors = ['#e05252' if x > target_food_cost else '#6bcb77' for x in item_food_cost['food_cost_pct']]
         
         fig_food_cost = go.Figure(go.Bar(
             x=item_food_cost['food_cost_pct'],
@@ -608,7 +565,7 @@ with tab2:
             marker_color=colors
         ))
         
-        fig_food_cost.add_vline(x=target_food_cost, line_dash="dash", line_color="#eab308", opacity=0.7)
+        fig_food_cost.add_vline(x=target_food_cost, line_dash="dash", line_color="#f0c040", opacity=0.7)
         
         fig_food_cost.update_layout(create_plotly_theme()['layout'])
         fig_food_cost.update_layout(
@@ -669,7 +626,7 @@ with tab3:
             x=waste_by_item.values,
             y=waste_by_item.index,
             orientation='h',
-            marker_color='#ef4444'
+            marker_color='#e05252'
         ))
         
         fig_waste_item.update_layout(create_plotly_theme()['layout'])
@@ -690,7 +647,7 @@ with tab3:
             labels=waste_by_type.index,
             values=waste_by_type.values,
             hole=0.4,
-            marker=dict(colors=['#ef4444', '#f87171', '#fca5a5'])
+            marker=dict(colors=['#e05252', '#d47070', '#c49090'])
         ))
         
         fig_waste_type.update_layout(create_plotly_theme()['layout'])
@@ -708,7 +665,7 @@ with tab3:
     fig_waste_trend = go.Figure(go.Bar(
         x=monthly_waste['month'],
         y=monthly_waste['total_food_cost'],
-        marker_color='#ef4444'
+        marker_color='#e05252'
     ))
     
     fig_waste_trend.update_layout(create_plotly_theme()['layout'])
@@ -728,7 +685,7 @@ with tab3:
         x=waste_by_channel.values,
         y=waste_by_channel.index,
         orientation='h',
-        marker_color='#ef4444'
+        marker_color='#e05252'
     ))
     
     fig_waste_channel.update_layout(create_plotly_theme()['layout'])
@@ -778,7 +735,7 @@ with tab4:
         fig_dow = go.Figure(go.Bar(
             x=dow_revenue.index,
             y=dow_revenue.values,
-            marker_color='#6366f1'
+            marker_color='#c8956c'
         ))
         
         fig_dow.update_layout(create_plotly_theme()['layout'])
@@ -801,7 +758,7 @@ with tab4:
             x=monthly_revenue['month_year'],
             y=monthly_revenue['total_revenue'],
             mode='lines+markers',
-            line=dict(color='#6366f1', width=2),
+            line=dict(color='#c8956c', width=2),
             marker=dict(size=8)
         ))
         
@@ -822,8 +779,8 @@ with tab4:
         x=hourly_revenue['hour'],
         y=hourly_revenue['total_revenue'],
         fill='tozeroy',
-        line=dict(color='#6366f1'),
-        fillcolor='rgba(99, 102, 241, 0.2)'
+        line=dict(color='#c8956c'),
+        fillcolor='rgba(200, 149, 108, 0.2)'
     ))
     
     fig_hourly.update_layout(create_plotly_theme()['layout'])
@@ -969,18 +926,16 @@ with tab5:
         st.markdown("<br>", unsafe_allow_html=True)
         
         # Net impact card
-        impact_color = "#22c55e" if net_impact > 0 else "#ef4444"
+        impact_color = "#6bcb77" if net_impact > 0 else "#e05252"
         impact_icon = "▲" if net_impact > 0 else "▼"
         
         st.markdown(f"""
-        <div style="background: #111520; border: 2px solid {impact_color}; border-radius: 8px; padding: 20px; text-align: center;">
-            <div style="color: #5a6278; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">
-                Net Margin Impact
-            </div>
-            <div style="color: {impact_color}; font-size: 32px; font-weight: 700;">
+        <div class="impact-card" style="border: 2px solid {impact_color};">
+            <div class="impact-label">Net Margin Impact</div>
+            <div class="impact-value" style="color: {impact_color};">
                 {impact_icon} ${abs(net_impact):,.0f}
             </div>
-            <div style="color: #5a6278; font-size: 14px; margin-top: 8px;">
+            <div class="impact-detail">
                 {'+' if net_impact > 0 else ''}{((new_margin / current_margin - 1) * 100):.1f}% change in contribution margin
             </div>
         </div>
@@ -995,14 +950,14 @@ with tab5:
             name='Current',
             x=['Revenue', 'Margin'],
             y=[current_revenue, current_margin],
-            marker_color='#5a6278'
+            marker_color='#7a6b5e'
         ))
         
         fig_comparison.add_trace(go.Bar(
             name='Projected',
             x=['Revenue', 'Margin'],
             y=[new_revenue, new_margin],
-            marker_color='#6366f1'
+            marker_color='#c8956c'
         ))
         
         fig_comparison.update_layout(create_plotly_theme()['layout'])
@@ -1015,8 +970,8 @@ with tab5:
         
         st.plotly_chart(fig_comparison, use_container_width=True)
 
-st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown(
-    '<div style="text-align: center; color: #5a6278; font-size: 12px; padding: 20px;">Restaurant Analytics Dashboard • Data-driven menu optimization</div>',
-    unsafe_allow_html=True
-)
+st.markdown("""
+<div class="dashboard-footer">
+    🍽️ Restaurant Analytics Dashboard &bull; Data-driven menu optimization
+</div>
+""", unsafe_allow_html=True)

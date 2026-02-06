@@ -1,0 +1,402 @@
+/* ==========================================================================
+   Restaurant Analytics Dashboard — Custom Stylesheet
+   A warm, inviting restaurant-themed design with modern UI polish.
+   ========================================================================== */
+
+/* ---------- Google Font ---------- */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+/* ---------- Root Variables ---------- */
+:root {
+    --bg-primary: #1a1210;
+    --bg-secondary: #241c18;
+    --bg-card: #2a211c;
+    --border: #3d302a;
+    --border-hover: #c8956c;
+    --accent: #c8956c;
+    --accent-light: #e0b48c;
+    --accent-faint: rgba(200, 149, 108, 0.10);
+    --text-primary: #f0e6dd;
+    --text-secondary: #a89585;
+    --text-muted: #7a6b5e;
+    --success: #6bcb77;
+    --warning: #f0c040;
+    --danger: #e05252;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Global ---------- */
+* {
+    font-family: 'DM Sans', sans-serif !important;
+}
+
+html, body, .main, [data-testid="stAppViewContainer"] {
+    background-color: var(--bg-primary) !important;
+}
+
+[data-testid="stSidebar"] {
+    background-color: var(--bg-secondary) !important;
+    border-right: 1px solid var(--border) !important;
+}
+
+h1, h2, h3 {
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif !important;
+}
+
+/* ---------- Dashboard Header ---------- */
+.dashboard-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, #352a22 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dashboard-header .header-title {
+    color: var(--text-primary);
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.dashboard-header .header-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* ---------- KPI / Metric Cards ---------- */
+.metric-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+    border-radius: var(--radius) 0 0 var(--radius);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.metric-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 8px 32px rgba(200, 149, 108, 0.12);
+    transform: translateY(-2px);
+}
+
+.metric-card:hover::before {
+    opacity: 1;
+}
+
+.metric-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.metric-value {
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.1;
+}
+
+.metric-delta {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ---------- Status Badges ---------- */
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: fadeIn 0.5s ease;
+}
+
+.status-healthy {
+    background: rgba(107, 203, 119, 0.12);
+    color: var(--success);
+    border: 1px solid rgba(107, 203, 119, 0.25);
+}
+
+.status-warning {
+    background: rgba(240, 192, 64, 0.12);
+    color: var(--warning);
+    border: 1px solid rgba(240, 192, 64, 0.25);
+}
+
+.status-danger {
+    background: rgba(224, 82, 82, 0.12);
+    color: var(--danger);
+    border: 1px solid rgba(224, 82, 82, 0.25);
+}
+
+/* ---------- Tabs ---------- */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 6px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 6px;
+    border: 1px solid var(--border);
+}
+
+.stTabs [data-baseweb="tab"] {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-muted);
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: var(--text-primary);
+    background: var(--accent-faint);
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: var(--accent) !important;
+    color: #1a1210 !important;
+    border: none !important;
+    font-weight: 700;
+}
+
+/* Remove default tab highlight bar */
+.stTabs [data-baseweb="tab-highlight"] {
+    display: none;
+}
+
+/* ---------- Sidebar Styling ---------- */
+.sidebar-section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ---------- Section Panel ---------- */
+.section-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.section-title {
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ---------- Orders Preview Table ---------- */
+.order-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+}
+
+.order-row:hover {
+    background: var(--accent-faint);
+}
+
+.order-row:last-child {
+    border-bottom: none;
+}
+
+.order-id {
+    color: var(--accent-light);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.order-item {
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.order-amount {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.order-channel-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--accent-faint);
+    color: var(--accent-light);
+    border: 1px solid var(--border);
+}
+
+/* ---------- Expanders ---------- */
+.streamlit-expanderHeader {
+    background: var(--bg-card) !important;
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* ---------- Dataframe styling ---------- */
+[data-testid="stDataFrame"] {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+/* ---------- Footer ---------- */
+.dashboard-footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Stagger metric cards — animation inherited from @keyframes fadeIn above */
+
+/* Chart containers fade in */
+[data-testid="stPlotlyChart"] {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* ---------- Slider & Widget Accents ---------- */
+.stSlider > div > div > div > div {
+    background-color: var(--accent) !important;
+}
+
+/* ---------- Multiselect ---------- */
+[data-baseweb="tag"] {
+    background-color: var(--accent-faint) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--accent-light) !important;
+}
+
+/* ---------- Net Impact Card (Price Simulator) ---------- */
+.impact-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.impact-card:hover {
+    transform: translateY(-2px);
+}
+
+.impact-card .impact-label {
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.impact-card .impact-value {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.impact-card .impact-detail {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 8px;
+}
