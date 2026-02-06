@@ -419,8 +419,8 @@ with tab1:
         line=dict(color='#6366f1', width=2)
     ))
     
+    fig_daily.update_layout(create_plotly_theme()['layout'])
     fig_daily.update_layout(
-        **create_plotly_theme()['layout'],
         title='Daily Revenue Trend',
         height=350,
         showlegend=True,
@@ -443,8 +443,8 @@ with tab1:
             marker_color='#6366f1'
         ))
         
+        fig_channel.update_layout(create_plotly_theme()['layout'])
         fig_channel.update_layout(
-            **create_plotly_theme()['layout'],
             title='Revenue by Channel',
             height=300,
             xaxis_title='Revenue ($)',
@@ -464,8 +464,8 @@ with tab1:
             marker=dict(colors=['#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe', '#e0e7ff', '#eef2ff'])
         ))
         
+        fig_category.update_layout(create_plotly_theme()['layout'])
         fig_category.update_layout(
-            **create_plotly_theme()['layout'],
             title='Revenue by Category',
             height=300,
             showlegend=True
@@ -525,8 +525,8 @@ with tab2:
     fig_matrix.add_annotation(x=median_revenue * 0.5, y=item_stats['margin_per_unit'].min() * 1.5,
                              text="DOGS", showarrow=False, font=dict(size=14, color="#ef4444"))
     
+    fig_matrix.update_layout(create_plotly_theme()['layout'])
     fig_matrix.update_layout(
-        **create_plotly_theme()['layout'],
         title='Menu Engineering Matrix',
         xaxis_title='Total Revenue ($)',
         yaxis_title='Contribution Margin per Unit ($)',
@@ -582,8 +582,8 @@ with tab2:
             marker_color='#6366f1'
         ))
         
+        fig_cat_margin.update_layout(create_plotly_theme()['layout'])
         fig_cat_margin.update_layout(
-            **create_plotly_theme()['layout'],
             title='Margin % by Category',
             xaxis_title='Margin %',
             yaxis_title='',
@@ -610,8 +610,8 @@ with tab2:
         
         fig_food_cost.add_vline(x=target_food_cost, line_dash="dash", line_color="#eab308", opacity=0.7)
         
+        fig_food_cost.update_layout(create_plotly_theme()['layout'])
         fig_food_cost.update_layout(
-            **create_plotly_theme()['layout'],
             title=f'Food Cost % by Item (Top 15)',
             xaxis_title='Food Cost %',
             yaxis_title='',
@@ -672,8 +672,8 @@ with tab3:
             marker_color='#ef4444'
         ))
         
+        fig_waste_item.update_layout(create_plotly_theme()['layout'])
         fig_waste_item.update_layout(
-            **create_plotly_theme()['layout'],
             title='Waste Cost by Item (Top 15)',
             xaxis_title='Waste Cost ($)',
             yaxis_title='',
@@ -693,8 +693,8 @@ with tab3:
             marker=dict(colors=['#ef4444', '#f87171', '#fca5a5'])
         ))
         
+        fig_waste_type.update_layout(create_plotly_theme()['layout'])
         fig_waste_type.update_layout(
-            **create_plotly_theme()['layout'],
             title='Waste Cost by Type',
             height=400
         )
@@ -711,8 +711,8 @@ with tab3:
         marker_color='#ef4444'
     ))
     
+    fig_waste_trend.update_layout(create_plotly_theme()['layout'])
     fig_waste_trend.update_layout(
-        **create_plotly_theme()['layout'],
         title='Monthly Waste Cost Trend',
         xaxis_title='Month',
         yaxis_title='Waste Cost ($)',
@@ -731,8 +731,8 @@ with tab3:
         marker_color='#ef4444'
     ))
     
+    fig_waste_channel.update_layout(create_plotly_theme()['layout'])
     fig_waste_channel.update_layout(
-        **create_plotly_theme()['layout'],
         title='Waste Cost by Channel',
         xaxis_title='Waste Cost ($)',
         yaxis_title='',
@@ -759,8 +759,8 @@ with tab4:
         hovertemplate='Day: %{x}<br>Hour: %{y}<br>Orders: %{z}<extra></extra>'
     ))
     
+    fig_heatmap.update_layout(create_plotly_theme()['layout'])
     fig_heatmap.update_layout(
-        **create_plotly_theme()['layout'],
         title='Hourly Demand Heatmap',
         xaxis_title='Day of Week',
         yaxis_title='Hour of Day',
@@ -781,8 +781,8 @@ with tab4:
             marker_color='#6366f1'
         ))
         
+        fig_dow.update_layout(create_plotly_theme()['layout'])
         fig_dow.update_layout(
-            **create_plotly_theme()['layout'],
             title='Revenue by Day of Week',
             xaxis_title='',
             yaxis_title='Revenue ($)',
@@ -805,8 +805,8 @@ with tab4:
             marker=dict(size=8)
         ))
         
+        fig_monthly.update_layout(create_plotly_theme()['layout'])
         fig_monthly.update_layout(
-            **create_plotly_theme()['layout'],
             title='Monthly Revenue Trend',
             xaxis_title='',
             yaxis_title='Revenue ($)',
@@ -826,8 +826,8 @@ with tab4:
         fillcolor='rgba(99, 102, 241, 0.2)'
     ))
     
+    fig_hourly.update_layout(create_plotly_theme()['layout'])
     fig_hourly.update_layout(
-        **create_plotly_theme()['layout'],
         title='Revenue by Hour of Day',
         xaxis_title='Hour',
         yaxis_title='Revenue ($)',
@@ -1005,8 +1005,8 @@ with tab5:
             marker_color='#6366f1'
         ))
         
+        fig_comparison.update_layout(create_plotly_theme()['layout'])
         fig_comparison.update_layout(
-            **create_plotly_theme()['layout'],
             title='Current vs. Projected Performance',
             barmode='group',
             height=300,
