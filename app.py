@@ -20,8 +20,11 @@ st.set_page_config(
 )
 
 # Load external CSS for clean separation of concerns
-with open("styles.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+import os
+_css_path = os.path.join(os.path.dirname(__file__), "styles.css")
+if os.path.exists(_css_path):
+    with open(_css_path) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Lucide SVG icons
 ICONS = {
@@ -239,7 +242,10 @@ with tab1:
     
     # Additional KPIs
     total_orders = filtered_df['order_id'].nunique()
-    num_days = (filtered_df['order_date'].max() - filtered_df['order_date'].min()).days + 1
+    if len(filtered_df) > 0:
+        num_days = (filtered_df['order_date'].max() - filtered_df['order_date'].min()).days + 1
+    else:
+        num_days = 1
     daily_revenue_avg = total_revenue / num_days if num_days > 0 else 0
 
     # Status badge
