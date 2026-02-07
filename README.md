@@ -201,14 +201,6 @@ The analysis can be customized for your:
 
 This is a **portfolio demonstration** of data analytics capabilities for the restaurant industry. The data is synthetic but models realistic patterns observed in actual restaurant operations.
 
-**Skills demonstrated:**
-- Data engineering (generating realistic synthetic datasets)
-- Statistical analysis (menu engineering, margin analysis)
-- Data visualization (interactive dashboards with Plotly)
-- Business intelligence (actionable recommendations with quantified impact)
-- Python development (clean, production-ready code)
-
-Built by a freelance data analyst specializing in restaurant analytics.
 
 ---
 
