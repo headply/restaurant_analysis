@@ -309,7 +309,7 @@ def main():
     # Generate data
     df = generate_transactions()
     
-    # Create data directory if it doesn't exist
+
     os.makedirs('data', exist_ok=True)
     
     # Save to CSV
