@@ -712,10 +712,10 @@ with tab4:
         z=heatmap_data.values,
         x=heatmap_data.columns,
         y=heatmap_data.index,
-        colorscale='Viridis',
+        colorscale='YlOrRd',
         hovertemplate='Day: %{x}<br>Hour: %{y}<br>Orders: %{z}<extra></extra>'
     ))
-    
+
     fig_heatmap.update_layout(create_plotly_theme()['layout'])
     fig_heatmap.update_layout(
         title='Hourly Demand Heatmap',
