@@ -191,17 +191,9 @@ The analysis can be customized for your:
 ### Dashboard Overview
 *Live metrics, revenue trends, and channel breakdown*
 
-![Dashboard Overview Placeholder]
+![Overview](screenshots/overview.JPG)
 
-### Menu Engineering Matrix
-*Strategic classification of all menu items*
 
-![Menu Engineering Placeholder]
-
-### Waste Analysis
-*Quantified losses by item, type, and trend*
-
-![Waste Analysis Placeholder]
 
 ---
 
