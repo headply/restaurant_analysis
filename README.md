@@ -223,3 +223,4 @@ MIT License — Free to use for learning and portfolio purposes.
 Have a restaurant analytics project? Let's talk.
 
 **GitHub**: [@headply](https://github.com/headply)
+**Email**: [gmail](headply@gmail.com)S
